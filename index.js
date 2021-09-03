@@ -36,4 +36,6 @@ for (const file of player) {
     client.player.on(file.split(".")[0], event.bind(null, client));
 };
 
+client.player.leaveOnEndCooldown = 300;
+
 client.login(client.config.discord.token);
