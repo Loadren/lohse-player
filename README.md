@@ -1,76 +1,91 @@
-# Discord Music Bot
+# Music-bot
 
-The perfect music bot for your Discord server! 🎶
+## Migrating to v5...
 
-## Features
+Music-Bot has not been migrated to Discord Player v5 yet! It's on the way, feel free to add a star to this repository to show your support. In the meantime, you should use **[discord-music-bot](https://github.com/Androz2091/discord-music-bot)**. Please do not spam issues here as it should have probably been resolved in the new repo. Thanks.
 
-### Highlights
+A complete code to download for a music bot. Using a module (discord-player) 🎧
 
-* Simple & easy to use 🤘
-* Audio filters (bassboost) 🎸
-* YouTube, Facebook and Vimeo support 🌌
-* Slash Commands support 🤖
-* Play in multiple servers at the same time 🚗
+Looking for a code for a music bot ? This fully open source code is made for your project !
 
-### Commands
+If you need help with this project, to get support faster you can join the help server by just clicking [here](https://discord.gg/5cGSYV8ZZj).
 
-Here are all the available commands in the bot!
+### ⚡ Installation
 
-|      Name      |            Description            |  Options  |
-|:---------------|:---------------------------------:|----------:|
-|   **/back**    |     Plays the previous track      |           |
-| **/bassboost** |     Toggles bassboost filter      |           |
-|   **/jump**    |     Jumps to a specific track     | \<tracks> |
-|   **/loop**    |          Sets loop mode           |  \<mode>  |
-|    **/np**     | See what's currently being played |           |
-|   **/pause**   |      Pause the current song       |           |
-|   **/play**    |     Plays a song from youtube     | \<query>  |
-|   **/queue**   |           See the queue           |           |
-|  **/resume**   |      Resume the current song      |           |
-|   **/seek**    |      Seeks to the given time      |  \<time>  |
-|  **/shuffle**  |        Shuffles the queue         |           |
-|   **/skip**    |     Skip to the current song      |           |
-|   **/stop**    |          Stop the player          |           |
-|  **/volume**   |         Sets music volume         | \<amount> |
+Well, let's start by downloading the code.
+Go to the folder `config` then the file `bot.js`.
+For the bot to be able to start, please complete the file with your credentials as follows :
 
-## About
+- For emojis
 
-The project uses the following libraries:
-
-* **[Androz2091/discord-player](https://github.com/Androz2091/discord-player)** library for the core music features
-* **[discordjs](https://github.com/discordjs/discord.js)** for all the other requests to the Discord API
-* **[@discordjs/voice](https://github.com/discordjs/voice)** for all the **voice** requests to the Discord API
-* **[@discordjs/opus](https://github.com/discordjs/opus)** as the opus library
-* **[FFMPEG](https://ffmpeg.org)** to encode the stream
-
-## Installation
-
-### Manual
-* Install [FFMPEG](https://ffmpeg.org).
-* Clone the repository. (`git clone https://github.com/Androz2091/discord-music-bot`)
-* Copy the `.env.example` file as `.env` and fill it.
- - `DISCORD_CLIENT_ID` is the ID of your Discord BOT
- - `DISCORD_CLIENT_TOKEN` is the token of your Discord BOT
-* Install the dependencies. (`yarn install` or `npm install`)
-* Start the bot! (`node .`)
-
-### Docker 
-* Copy the `.env.example` file as `.env` and fill it.
-```sh
-docker build . -t discord-music-bot
-docker run -d --env-file .env discord-music-bot 
+```js
+emojis: {
+    off: ':x:',
+    error: ':warning:',
+    queue: ':bar_chart:',
+    music: ':musical_note:',
+    success: ':white_check_mark:',
+}
 ```
 
-### Example with docker-compose
-```
-version: '2'
+- For configuration
 
-services:
-  bot:
-    build: .
-    environment:
-      DISCORD_CLIENT_ID: ""
-      DISCORD_CLIENT_TOKEN: ""
-      DISCORD_CLIENT_PUBKEY: ""
-      DISCORD_GUILD_ID: ""
+```js
+discord: {
+    token: 'TOKEN',
+    prefix: 'PREFIX',
+    activity: 'ACTIVITY',
+}
 ```
+
+- `token`, the token of the bot available on the [Discord Developers](https://discordapp.com/developers/applications) section.
+- `prefix`, the prefix that will be set to use the bot.
+- `activity`, the activity of the bot.
+
+In the console, type `npm install` to install all dependencies.
+
+- To start the bot :
+
+```
+#With Node
+node index.js
+npm start #Indicated in package.json
+
+#With pm2
+pm2 start index.js --name "MusicBot"
+```
+
+All you have to do is turn on your bot !
+
+### 🎵 Music commands
+
+```
+play <name/URL>, play music in a voice channel.
+search <name>, open a panel to choose a music and then play it.
+pause, pause the current music.
+resume, puts the current music back on.
+queue, see the next songs.
+clear-queue, remove music in the queue.
+shuffle, to mix the queue.
+nowplaying, see music in progress.
+loop, to enable or disable the repeat function.
+volume <1 - 100>, change the volume.
+skip, skip to next music.
+stop, stop all music.
+filter <filter>, add / remove filter.
+w-filters, see filters.
+```
+
+### 💡 General commands
+
+```
+ping, see the bot latency.
+help, see the list of available commands.
+debug, see number of voice connections.
+```
+
+### 🏓 Utilities (to change the code)
+
+Find all the functions available on the official code [right here](https://github.com/Androz2091/discord-player).
+
+This is used with [discord.js](https://www.npmjs.com/package/discord.js) and [discord-player](https://www.npmjs.com/package/discord-player).
