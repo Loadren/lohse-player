@@ -2,7 +2,7 @@ module.exports = {
     name: 'roll',
     aliases: ['r'],
     category: 'Roll',
-    utilisation: '{prefix}roll',
+    utilisation: '{prefix}roll [Number]D[Number]',
 
     execute(client, message, args) {
 

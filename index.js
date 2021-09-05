@@ -2,10 +2,21 @@ const fs = require('fs');
 const discord = require('discord.js');
 
 const client = new discord.Client({ disableMentions: 'everyone' });
-
 const { Player } = require('discord-player');
 
-client.player = new Player(client);
+const PlayerOptions = {
+    leaveOnEnd: true,
+    leaveOnStop: true,
+    leaveOnEmpty: true,
+    leaveOnEndCooldown: 300000,
+    leaveOnEmptyCooldown: 300000,
+    autoSelfDeaf: true,
+    quality: 'high',
+    enableLive: false,
+    ytdlRequestOptions: {}
+}
+
+client.player = new Player(client, PlayerOptions);
 client.config = require('./config/bot');
 client.emotes = client.config.emojis;
 client.filters = client.config.filters;
@@ -35,7 +46,5 @@ for (const file of player) {
     const event = require(`./player/${file}`);
     client.player.on(file.split(".")[0], event.bind(null, client));
 };
-
-client.player.options.leaveOnEndCooldown = 300;
 
 client.login(client.config.discord.token);
