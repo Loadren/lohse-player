@@ -15,7 +15,7 @@ module.exports = {
 
         if (isNaN(args[0])) return message.channel.send(`${client.emotes.error} - Please indicate by how much you want to fast forward the song (in seconds) !`);
 
-        var guildID = message.guildID;
+        var guildID = message.guild.id;
         var time = client.player.queues.get(guildID);
 
         time = (time != undefined) ? time.currentStreamTime : undefined;
