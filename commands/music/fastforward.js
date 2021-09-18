@@ -15,9 +15,14 @@ module.exports = {
 
         if (isNaN(args[0])) return message.channel.send(`${client.emotes.error} - Please indicate by how much you want to fast forward the song (in seconds) !`);
 
-        var time = client.player.queues.get("429596111964209162").currentStreamTime;
+        var guildID = message.guildID;
+        var time = client.player.queues.get(guildID);
 
-        client.player.setPosition(message, time + args[0]*1000);
+        time = (time != undefined) ? time.currentStreamTime : undefined;
+
+        if (!time) return message.channel.send(`${client.emotes.error} - An error occured.`);
+
+        client.player.setPosition(message, time + args[0] * 1000);
 
         message.channel.send(`${client.emotes.success} - You fast forwarded ${args[0]} seconds !`);
     },
