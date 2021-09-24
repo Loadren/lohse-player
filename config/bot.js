@@ -11,7 +11,7 @@ module.exports = {
         token: 'ODgzMDA5NjcwMzE3NDk4Mzcy.YTDs1g.dO0p1k5hMB3snQws-beUAQNYJo8',
         prefix: '-',
         activity: (client) => {
-            return console.log(`Ready to sing along on ${client.guilds.cache.size} servers!`);
+            return `Ready to sing along on ${client.guilds.cache.size} servers!`;
         }
     },
 
