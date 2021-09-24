@@ -10,7 +10,9 @@ module.exports = {
     discord: {
         token: 'ODgzMDA5NjcwMzE3NDk4Mzcy.YTDs1g.dO0p1k5hMB3snQws-beUAQNYJo8',
         prefix: '-',
-        activity: 'I\'m alright, as long as I don\'t think about it too much...',
+        activity: (client) => {
+            return console.log(`Ready to sing along on ${client.guilds.cache.size} servers!`);
+        }
     },
 
     filters: ['4D', '8D', 'gate', 'haas', 'phaser', 'treble', 'tremolo', 'vibrato', 'reverse', 'karaoke', 'flanger', 'mcompand', 'pulsator', 'subboost', 'bassboost', 'vaporwave', 'nightcore', 'normalizer', 'surrounding'],
