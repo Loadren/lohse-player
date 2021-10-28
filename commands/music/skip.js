@@ -33,7 +33,19 @@ module.exports = {
             }
         }
 
-        const success = client.player.skip(message);
+        var success;
+
+        if (client.player.getQueue(message).repeatMode) {
+            client.player.setRepeatMode(message, false);
+            success = client.player.skip(message);
+
+            // Here, we set a Timeout because there's an event each second checking for a property to skip songs. Need to match that.
+            setTimeout(function() {
+                client.player.setRepeatMode(message, true);
+            }, 1000)
+        } else {
+            success = client.player.skip(message);
+        };
 
         if (success) message.channel.send(`${client.emotes.success} - The current music has just been **skipped** !`);
     },

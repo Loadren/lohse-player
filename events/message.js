@@ -12,6 +12,5 @@ module.exports = (client, message) => {
 
     if (cmd) {
         cmd.execute(client, message, args);
-        client.user.setActivity(client.config.discord.activity(client));
     }
 };
