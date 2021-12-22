@@ -1,91 +1,51 @@
-# Music-bot
+<div align="center">
+  <p>
+    <img src="https://nize.ph/gallery/dodongmedium.png" width="500" alt="Dodong" /></a>
+  </p>
+  <br>
+  <p>
+    <a href="https://github.com/nizeic/Dodong/actions"><img src="https://img.shields.io/github/workflow/status/nizeic/Dodong/Node.js%20CI?color=44b868&logo=GitHub%20Actions&logoColor=white&style=flat-square" alt="build status"></a> 
+    <a href="https://github.com/nizeic/Dodong/commits/main"><img src="https://img.shields.io/github/last-commit/nizeic/Dodong?color=44b868&logo=GitHub&logoColor=white&style=flat-square" alt="last commit"></a> 
+    <a href="https://nize.ph/discord"><img src="https://img.shields.io/discord/706460727573217381?color=44b868&logo=discord&logoColor=white&style=flat-square" alt="discord server"></a>
+    <a href="https://www.npmjs.com/package/discord.js"><img src="https://img.shields.io/github/package-json/dependency-version/nizeic/Dodong/discord.js?color=44b868&logo=npm&style=flat-square"></a>
+    
+  </p>
+</div>
+<br>
 
-## Migrating to v5...
+A music bot written using [discord.js](https://github.com/discordjs/discord.js) and [discord-player](https://github.com/Androz2091/discord-player)
 
-Music-Bot has not been migrated to Discord Player v5 yet! It's on the way, feel free to add a star to this repository to show your support. In the meantime, you should use **[discord-music-bot](https://github.com/Androz2091/discord-music-bot)**. Please do not spam issues here as it should have probably been resolved in the new repo. Thanks.
+![Screenshot of the bot in action](https://nize.ph/gallery/dodongexample.png)
 
-A complete code to download for a music bot. Using a module (discord-player) 🎧
+**NOTE: This project's source code is currently very poorly formatted and documented. Please use at your own risk.**
 
-Looking for a code for a music bot ? This fully open source code is made for your project !
+## Contribute
+View the list of bug reports and feature requests [here](https://github.com/nizeic/Dodong/issues).
 
-If you need help with this project, to get support faster you can join the help server by just clicking [here](https://discord.gg/5cGSYV8ZZj).
-
-### ⚡ Installation
-
-Well, let's start by downloading the code.
-Go to the folder `config` then the file `bot.js`.
-For the bot to be able to start, please complete the file with your credentials as follows :
-
-- For emojis
-
-```js
-emojis: {
-    off: ':x:',
-    error: ':warning:',
-    queue: ':bar_chart:',
-    music: ':musical_note:',
-    success: ':white_check_mark:',
-}
+## Deploy automatically
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)<br><br>
+[![Run on Repl.it](https://repl.it/badge/github/nizeic/Dodong)](https://repl.it/github/nizeic/Dodong)<br>
+**NOTE:** repl.it uses Node.js v12 by default which is unsupported by the bot.<br>
+To install Node.js v16, execute this script from the **Shell**:
+```sh
+npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_modules/node && export PATH=$(pwd)/node_modules/node/bin:$PATH
 ```
 
-- For configuration
-
-```js
-discord: {
-    token: 'TOKEN',
-    prefix: 'PREFIX',
-    activity: 'ACTIVITY',
-}
-```
-
-- `token`, the token of the bot available on the [Discord Developers](https://discordapp.com/developers/applications) section.
-- `prefix`, the prefix that will be set to use the bot.
-- `activity`, the activity of the bot.
-
-In the console, type `npm install` to install all dependencies.
-
-- To start the bot :
-
-```
-#With Node
-node index.js
-npm start #Indicated in package.json
-
-#With pm2
-pm2 start index.js --name "MusicBot"
-```
-
-All you have to do is turn on your bot !
-
-### 🎵 Music commands
-
-```
-play <name/URL>, play music in a voice channel.
-search <name>, open a panel to choose a music and then play it.
-pause, pause the current music.
-resume, puts the current music back on.
-queue, see the next songs.
-clear-queue, remove music in the queue.
-shuffle, to mix the queue.
-nowplaying, see music in progress.
-loop, to enable or disable the repeat function.
-volume <1 - 100>, change the volume.
-skip, skip to next music.
-stop, stop all music.
-filter <filter>, add / remove filter.
-w-filters, see filters.
-```
-
-### 💡 General commands
-
-```
-ping, see the bot latency.
-help, see the list of available commands.
-debug, see number of voice connections.
-```
-
-### 🏓 Utilities (to change the code)
-
-Find all the functions available on the official code [right here](https://github.com/Androz2091/discord-player).
-
-This is used with [discord.js](https://www.npmjs.com/package/discord.js) and [discord-player](https://www.npmjs.com/package/discord-player).
+## Manual installation
+1. Install [Node.js v16](https://nodejs.org/en/download)
+2. Clone this repository
+    ```sh
+    git clone https://github.com/nizeic/Dodong.git
+    ```
+3. Install dependencies
+    ```sh
+    npm install
+    ```
+4. Enter your [bot token](https://discord.com/developers/applications) in `config.js`
+    ```js
+    bottoken: "BOT TOKEN HERE",
+    ```
+5. Run the bot
+    ```sh
+    npm start
+    ```

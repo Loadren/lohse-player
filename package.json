@@ -1,17 +1,41 @@
 {
-  "name": "music-bot",
-  "main": "index.js",
-  "author": "ZerioDev",
-  "version": "5.0.0",
-  "repository": "https://github.com/ZerioDev/Music-bot.git",
-  "description": "A complete code to download for a music bot. Using a module (discord-player).",
-  "scripts": {
-    "start": "node index.js"
+  "name": "dodong",
+  "homepage": "https://github.com/nizeic/Dodong#readme",
+  "bugs": {
+    "url": "https://github.com/nizeic/Dodong/issues"
   },
+  "license": "MIT",
+  "description": "A music bot written using discord.js and discord-player",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [
+    "discord",
+    "music",
+    "bot",
+    "discordjs"
+  ],
+  "author": "nizeic",
   "dependencies": {
-    "@discordjs/opus": "^0.3.3",
-    "discord-player": "^3.3.2",
-    "discord.js": "^12.5.1",
-    "ffmpeg-static": "^4.2.7"
+    "@discord-player/extractor": "^3.0.2",
+    "@discordjs/opus": "^0.7.0",
+    "discord-player": "^5.2.0",
+    "discord.js": "^13.3.1",
+    "discordjs-button-pagination": "1.0.7",
+    "ffmpeg-static": "^4.4.0",
+    "play-dl": "^1.5.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "npm start"
+  },
+  "engines": {
+    "node": "16.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nizeic/Dodong.git"
+  },
+  "devDependencies": {
+    "node": "^16.13.1"
   }
 }

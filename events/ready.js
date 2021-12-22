@@ -1,8 +1,6 @@
-module.exports = async(client) => {
-    console.log(`Logged in as ${client.user.username}. Ready on ${client.guilds.cache.size} servers, for a total of ${client.users.cache.size} users`);
+const Event = require("../structures/event.js");
 
-    if (client.config.isMaintenance)
-        client.user.setActivity("MAINTENANCE.")
-    else
-        client.user.setActivity(client.config.discord.activity(client));
-};
+module.exports = new Event("ready", client => {
+	console.log("--------- Lohse is ready! ---------");
+	client.user.setActivity(`Ready to sing along on ${client.guilds.cache.size} servers!`, { type: 'LISTENING' });
+});

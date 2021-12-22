@@ -1,0 +1,33 @@
+{
+    "name": "Lohse",
+    "description": "Music bot for everyone!",
+    "keywords": ["discord", "music", "bot", "discordjs"],
+    "image": "heroku/nodejs",
+    "buildpacks": [
+        {
+            "url": "heroku/nodejs"
+        }
+    ],
+  "env": {
+        "PREFIX": {
+            "description": "Command prefix for the bot (default: -)",
+            "required": false
+        },
+        "BOTTOKEN": {
+            "description": "Bot token",
+            "required": true
+        },
+        "GENIUSAPITOKEN": {
+            "description": "Genius.com Client Access Token",
+            "required": false
+        }
+    },
+    "formation": {
+        "worker": {
+          "quantity": 1
+        },
+        "web": {
+            "quantity": 0
+        }
+    }
+}
