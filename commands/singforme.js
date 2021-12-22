@@ -3,27 +3,19 @@ const { QueryType } = require('discord-player');
 const playdl = require("play-dl");
 
 module.exports = new Command({
-	name: "play",
-    aliases: ['p'],
-	description: "Plays the song specified",
+	name: "singforme",
+    aliases: ['sfm'],
+	description: "Sing for the user",
 	permission: "SEND_MESSAGES",
 	async run(message, args, client) {
         if(!message.member.voice.channelId)
             return message.reply({ embeds: [{ description: `You are not in a voice channel!`, color: 0xb84e44 }] });
         if(message.guild.me.voice.channelId && message.member.voice.channelId !== message.guild.me.voice.channelId)
             return message.reply({ embeds: [{ description: `You are not in my voice channel!`, color: 0xb84e44 }] });
-        if(!args[1]) {
-            const queue = client.player.getQueue(message.guild);
-            if(queue && queue.playing) { // resume
-                const paused = queue.setPaused(false);
-                if(paused) message.react('▶️');
-            }
-            return;
-        }
         
         if(!message.guild.me.permissionsIn(message.member.voice.channel).has(client.requiredVoicePermissions)) return;
 
-        let query = args.slice(1).join(" ");
+        let query = "https://www.youtube.com/watch?v=PkgcgHp2Bh4";
         const searchResult = await client.player.search(query, { requestedBy: message.author, searchEngine: QueryType.AUTO })
         if (!searchResult || !searchResult.tracks.length)
             return message.channel.send({ embeds: [{ description: `No results found!`, color: 0xb84e44 }] });
@@ -55,6 +47,7 @@ module.exports = new Command({
                 }
             });
         let justConnected;
+
         try {
             if (!queue.connection) {
                 justConnected = true;
@@ -64,6 +57,12 @@ module.exports = new Command({
             client.player.deleteQueue(message.guild);
             return message.channel.send({ embeds: [{ description: `Could not join your voice channel!`, color: 0xb84e44 }] });
         }
+
+        if(queue.playing){
+            queue.clear();
+            queue.skip();
+        }
+
         if(searchResult.playlist) searchResult.tracks[0].playlist = searchResult.playlist;
         await searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
         if(justConnected || !queue.playing) queue.play();

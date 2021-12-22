@@ -21,6 +21,7 @@ module.exports = new Command({
         - **remove / r** : Removes a song from the queue
         - **resume** : Resumes the queue if it is paused
         - **skip / next / n** : Skips to the next song in the queue
+        - **singforme / sfm** : Tells the bot to sing for you
 	- **volume / vol** : Adjusts the bot volume`);
         return message.channel.send({ embeds: [embed] });
 	}
