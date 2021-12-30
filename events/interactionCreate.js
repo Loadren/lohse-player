@@ -2,6 +2,8 @@ const Event = require("../structures/event.js");
 const Queue = require("../commands/queue.js");
 const {MessageActionRow, MessageButton, MessageEmbed} = require('discord.js');
 const fetch = require('node-fetch');
+const getReply = require("../structures/getReply.js");
+const Github = require("../structures/github.js");
 
 module.exports = new Event("interactionCreate", async (client, interaction) => {
 
@@ -15,11 +17,11 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
     // apparently interactionCreate is also called when messaging so this is to verify if the interaction is a button press
     if(interaction.componentType === "BUTTON" && interaction.customId.includes("buttoncontrol")) {
         const queue = client.player.getQueue(interaction.guild);
-        if(!queue || !queue.playing) return;
-        const _isPaused = queue.connection.paused;
+        const _isPaused = queue?.connection?.paused;
         const embed = new MessageEmbed();
         switch(interaction.customId){
             case "buttoncontrol_play":
+                if(!queue || !queue.playing) return;
                 let row = new MessageActionRow()
                 .addComponents(
                     new MessageButton()
@@ -63,6 +65,7 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
                 await interaction.deferUpdate();
                 break;
             case "buttoncontrol_disconnect":
+                if(!queue || !queue.playing) return;
                 embed.setDescription(`👋 Disconnected.`);
                 embed.setColor('#44b868');
                 embed.setFooter(interaction.user.tag, interaction.user.displayAvatarURL());
@@ -71,6 +74,7 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
                 queue.destroy(true);
                 break;
             case "buttoncontrol_skip":
+                if(!queue || !queue.playing) return;
                 embed.setDescription(`Skipped **[${queue.current.title}](${queue.current.url})**`);
                 embed.setColor('#44b868');
                 embed.setFooter(interaction.user.tag, interaction.user.displayAvatarURL());
@@ -79,9 +83,98 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
                 queue.skip();
                 break;
             case "buttoncontrol_queue":
+                if(!queue || !queue.playing) return;
                 Queue.run(interaction, ["queue"], client, true);
                 await interaction.deferUpdate();
                 break;
+            case "buttoncontrol_bug_report":
+                embed.setTitle("Report a Bug");
+                embed.setColor('#44b868');
+                embed.setDescription("What bug do you want to report? (title of the ticket)");
+                embed.setFooter(interaction.user.tag, interaction.user.displayAvatarURL());
+                break;
+            case "buttoncontrol_feature_suggestion":
+                embed.setTitle("Suggest a Feature");
+                embed.setColor('#44b868');
+                embed.setDescription("What feature do you want to suggest? (title of the ticket)");
+                embed.setFooter(interaction.user.tag, interaction.user.displayAvatarURL());
+                break;
+            case "buttoncontrol_cancel":
+                interaction.message.delete();
+                await interaction.deferUpdate();
+        }
+
+        if(["buttoncontrol_bug_report", "buttoncontrol_feature_suggestion"].includes(interaction.customId)){
+
+            var type = interaction.customId == "buttoncontrol_bug_report" ? "bug" : "feature";
+            var user = interaction.user;
+
+            await interaction.message.edit({ embeds: [embed], components: [] });
+            await interaction.deferUpdate();
+            // Get Title
+
+            var titleMessage = await getReply(interaction.channel, user, 60);
+            var title = titleMessage.content;
+
+            if(!title) {
+                interaction.channel.send({
+                    embeds: [
+                        {
+                            description: `**${user.username}**, it's been a minute without answer. Cancelling ticket.`,
+                            color: 0x44b868
+                        }
+                    ]
+                });
+                return;
+            }   
+
+            titleMessage.delete();
+
+            // Get Description
+
+            embed.setTitle("Describe it");
+            embed.setColor('#44b868');
+            embed.setDescription(`Can you describe the ${type}?`);
+            embed.setFooter(user.tag, user.displayAvatarURL());
+
+            await interaction.message.edit({ embeds: [embed] });
+
+            var descriptionMessage = await getReply(interaction.channel, user, 180);
+            var description = descriptionMessage.content;
+
+            if(!description) {
+                interaction.channel.send({
+                    embeds: [
+                        {
+                            description: `**${user.usernam}**, it's been two minutes without answer. Cancelling ticket.`,
+                            color: 0x44b868
+                        }
+                    ]
+                });
+                return;
+            }
+
+            descriptionMessage.delete();
+
+            // Create issue
+
+            var issueUrl = await client.github.createIssue(title, description, type.split('|'));
+
+            // Reply created issue
+
+            var issueMessageEmbed = new MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle(title.toString())
+                .setURL(issueUrl.toString())
+                .setAuthor(user.username, user.avatarURL())
+                .setDescription(description.toString())
+                .setThumbnail("https://i.imgur.com/2Ltc2ro.png")
+                .addFields(
+                    { name: 'Type', value: type }
+                )
+                .setTimestamp()
+
+                await interaction.message.edit({ embeds: [issueMessageEmbed] });
         }
     }
     // Discord Together/Activities

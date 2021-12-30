@@ -21,7 +21,8 @@ module.exports = new Command({
         - **resume** : Resumes the queue if it is paused
         - **skip / next / n** : Skips to the next song in the queue
         - **singforme / sfm** : Tells the bot to sing for you
-	- **volume / vol** : Adjusts the bot volume`);
+	- **volume / vol** : Adjusts the bot volume
+        - **report** : Reports a bug or make a suggestion`);
         return message.channel.send({ embeds: [embed] });
 	}
 });

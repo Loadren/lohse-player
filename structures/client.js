@@ -3,16 +3,16 @@ const Command = require("./command.js");
 const Event = require("./event.js");
 const { Player } = require("discord-player");
 const PlayerHandler = require("./playerHandler.js");
+const Github = require("./github.js");
 const { musicEvents } = require("./music.js")
 const config = require("../config.js"); // Not on github since private Tokens
 const fs = require("fs");
-const { Lyrics } = require("@discord-player/extractor");
 
 class Client extends Discord.Client {
 	constructor() {
 		config.prefix = process.env.PREFIX || config.prefix;
 		config.bottoken = process.env.BOTTOKEN || config.bottoken;
-		config.geniusapitoken = process.env.GENIUSAPITOKEN || config.geniusapitoken;
+		config.githubtoken = process.env.GITHUBTOKEN || config.githubtoken;
 
 		super({	intents: [
 			Discord.Intents.FLAGS.GUILDS,
@@ -23,6 +23,8 @@ class Client extends Discord.Client {
 		this.commands = new Discord.Collection();
 		this.player = new Player(this);
 		this.playerHandler = new PlayerHandler();
+		this.github = new Github(config.githubtoken);
+		
 		this.requiredVoicePermissions = [
             "VIEW_CHANNEL",
             "CONNECT",
@@ -62,6 +64,12 @@ class Client extends Discord.Client {
 				this.on(event.event, event.run.bind(null, this));
 			});
 		console.log(`${count} events loaded.`);
+
+		// discord-player
+		musicEvents(this.player);
+
+		// Github link
+		
 
 		// events using EndTimeout
 		this.playerHandler.setHandler(this.player);
