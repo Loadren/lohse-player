@@ -3,6 +3,3 @@ node_modules/
 
 # Debug
 .debug
-
-#config
-config.js
