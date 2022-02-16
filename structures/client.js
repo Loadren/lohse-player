@@ -12,6 +12,7 @@ class Client extends Discord.Client {
 		config.prefix = process.env.PREFIX || config.prefix;
 		config.bottoken = process.env.BOTTOKEN || config.bottoken;
 		config.geniusapitoken = process.env.GENIUSAPITOKEN || config.geniusapitoken;
+		config.cookie = process.env.COOKIE || config.cookie;
 
 		super({	intents: [
 			Discord.Intents.FLAGS.GUILDS,
@@ -20,7 +21,19 @@ class Client extends Discord.Client {
 		]});
 
 		this.commands = new Discord.Collection();
-		this.player = new Player(this);
+		this.player = new Player(this, {
+			leaveOnEmpty: true,
+			ytdlOptions : {
+				highWaterMark: 1 << 25,
+				filter:"audioonly",
+				quality: "highestaudio",
+				requestOptions:{
+					headers:{
+						cookie: config.cookie
+					}
+				}
+			}
+		});
 		this.requiredVoicePermissions = [
             "VIEW_CHANNEL",
             "CONNECT",

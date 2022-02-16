@@ -29,7 +29,7 @@ module.exports = new Command({
             return message.channel.send({ embeds: [{ description: `No results found!`, color: 0xb84e44 }] });
 
         
-        var queue = client.player.getQueue(message.guild);
+        var queue = client.player.getQueue(message.guild); // Need to get the queue even if undefined to check if already in vocal. No need to recreate the queue
 
         if(!queue)
             queue = await client.player.createQueue(message.guild,{ metadata: { channel: message.channel },
@@ -47,9 +47,10 @@ module.exports = new Command({
                             vid = (await playdl.stream(track.url)).stream;
                         else
                             vid = (await playdl.stream(await playdl.search(`${track.author} ${track.title} lyric`, { limit : 1, source : { youtube : "video" } }).then(x => x[0].url))).stream;
-                    } catch {
+                    } catch(e) {
                         queue.metadata.channel.send({ embeds: [{ description: `An error occurred while attempting to play [${track.title}](${track.url}).`, color: 0xb84e44 }] });
-                        vid = (await playdl.stream("https://www.youtube.com/watch?v=Wch3gJG2GJ4", { quality: 0 })).stream; // a 1 second video. if u have a better way to do this, feel free to open a PR/issue :)
+                        vid = (await playdl.stream("https://www.youtube.com/watch?v=Wch3gJG2GJ4", { quality: 0 })).stream; // a 1 second video. if u have a better way to do this, feel free to try it :^)
+                        console.log(e);
                     }
                     return vid;
                 }
@@ -66,6 +67,6 @@ module.exports = new Command({
         }
         if(searchResult.playlist) searchResult.tracks[0].playlist = searchResult.playlist;
         await searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
-        if(justConnected || !queue.playing) queue.play();
+        if(justConnected || !queue.playing) queue.play(); // Here to check if already in vocal or just Connected.
 	}
 });
