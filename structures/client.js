@@ -14,8 +14,6 @@ try {
 } catch (e) {
 }
 
-console.log(config)
-
 class Client extends Discord.Client {
 	constructor() {
 		config.prefix = process.env.PREFIX || config.prefix;

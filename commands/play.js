@@ -9,8 +9,13 @@ try {
 } catch (e) {
 }
 
-config.cookies = process.env.cookies || config.cookies;
+config.cookies = process.env.COOKIES || config.cookies;
 
+playdl.setToken({
+    youtube : {
+        cookie : config.cookies
+    }
+});
 
 module.exports = new Command({
 	name: "play",

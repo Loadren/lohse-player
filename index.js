@@ -8,7 +8,7 @@ try {
 	console.log("Config file not found, using environment variables.")
 }
 
-config.bottoken = process.env.bottoken || config.bottoken;
+config.bottoken = process.env.BOTTOKEN || config.bottoken;
 
 const client = new Client();
 
