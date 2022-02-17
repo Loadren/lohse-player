@@ -1,7 +1,14 @@
 const Command = require("../structures/command.js");
 const { QueryType } = require('discord-player');
 const playdl = require("play-dl");
-const config = require("../config.js"); // Not on github since private Tokens
+
+let config;
+
+try {
+	config = require("../config.js");
+} catch (e) {
+	console.log("Config file not found, using environment variables.")
+}
 
 config.cookies = process.env.cookies || config.cookies;
 

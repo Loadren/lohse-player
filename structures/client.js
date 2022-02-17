@@ -5,8 +5,15 @@ const { Player } = require("discord-player");
 const PlayerHandler = require("./playerHandler.js");
 const Github = require("./github.js");
 const { musicEvents } = require("./music.js")
-const config = require("../config.js"); // Not on github since private Tokens
 const fs = require("fs");
+
+let config;
+
+try {
+	config = require("../config.js");
+} catch (e) {
+	console.log("Config file not found, using environment variables.")
+}
 
 class Client extends Discord.Client {
 	constructor() {
