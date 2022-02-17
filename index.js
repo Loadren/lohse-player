@@ -3,7 +3,7 @@ const Client = require("./structures/client.js");
 let config = {};
 
 try {
-	config = require("../config.js");
+	config = require("./config.js");
 } catch (e) {
 	console.log("Config file not found, using environment variables.")
 }

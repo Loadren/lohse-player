@@ -11,7 +11,6 @@ try {
 
 config.cookies = process.env.cookies || config.cookies;
 
-playdl.setToken(config.cookies);
 
 module.exports = new Command({
 	name: "play",
