@@ -3,8 +3,6 @@ node_modules/
 
 # Debug
 .debug
-config.js
-./config.js
 
 #Youtube Cookies
 .data
