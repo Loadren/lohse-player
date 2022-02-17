@@ -1,6 +1,6 @@
 const Client = require("./structures/client.js");
 
-let config;
+let config = {};
 
 try {
 	config = require("../config.js");

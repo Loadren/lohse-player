@@ -7,12 +7,11 @@ const Github = require("./github.js");
 const { musicEvents } = require("./music.js")
 const fs = require("fs");
 
-let config;
+let config = {};
 
 try {
 	config = require("../config.js");
 } catch (e) {
-	console.log("Config file not found, using environment variables.")
 }
 
 class Client extends Discord.Client {
