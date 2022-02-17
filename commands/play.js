@@ -5,6 +5,8 @@ const config = require("../config.js"); // Not on github since private Tokens
 
 config.cookies = process.env.cookies || config.cookies;
 
+playdl.setToken(config.cookies);
+
 module.exports = new Command({
 	name: "play",
     aliases: ['p'],
