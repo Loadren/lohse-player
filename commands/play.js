@@ -1,6 +1,5 @@
 const Command = require("../structures/command.js");
 const { QueryType } = require('discord-player');
-const playdl = require("play-dl");
 
 module.exports = new Command({
 	name: "play",
@@ -38,22 +37,7 @@ module.exports = new Command({
                 disableVolume: false, // disabling volume controls can improve performance
                 leaveOnEnd: false,
                 leaveOnStop: true,
-                leaveOnEmpty: true,
-
-                async onBeforeCreateStream(track, source, _queue) {
-                    let vid;
-                    try {
-                        if(track.url.includes("youtube.com"))
-                            vid = (await playdl.stream(track.url)).stream;
-                        else
-                            vid = (await playdl.stream(await playdl.search(`${track.author} ${track.title} lyric`, { limit : 1, source : { youtube : "video" } }).then(x => x[0].url))).stream;
-                    } catch(e) {
-                        queue.metadata.channel.send({ embeds: [{ description: `An error occurred while attempting to play [${track.title}](${track.url}).`, color: 0xb84e44 }] });
-                        vid = (await playdl.stream("https://www.youtube.com/watch?v=Wch3gJG2GJ4", { quality: 0 })).stream; // a 1 second video. if u have a better way to do this, feel free to try it :^)
-                        console.log(e);
-                    }
-                    return vid;
-                }
+                leaveOnEmpty: true
             });
         let justConnected;
         try {
