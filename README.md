@@ -12,7 +12,7 @@ You can access a list of commands by using "-help".
 
 ## Installation
 
-Add the bot to your server using [this link](https://discord.com/api/oauth2/authorize?client_id=923261950144708659&permissions=8&scope=bot).
+Add the bot to your server using [this link](https://discord.com/api/oauth2/authorize?client_id=883009670317498372&permissions=8&scope=bot).
 
 ### Want to contribute? Great!
 
