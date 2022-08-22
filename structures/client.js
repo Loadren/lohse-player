@@ -20,22 +20,38 @@ class Client extends Discord.Client {
 		config.bottoken = process.env.BOTTOKEN || config.bottoken;
 		config.githubtoken = process.env.GITHUBTOKEN || config.githubtoken;
 
-		super({	intents: [
-			Discord.Intents.FLAGS.GUILDS,
-			Discord.Intents.FLAGS.GUILD_MESSAGES,
-			Discord.Intents.FLAGS.GUILD_VOICE_STATES
-		]});
+		super({
+			intents: [
+				Discord.Intents.FLAGS.GUILDS,
+				Discord.Intents.FLAGS.GUILD_MESSAGES,
+				Discord.Intents.FLAGS.GUILD_VOICE_STATES
+			]
+		});
 
+		this.cookies = process.env.COOKIES || config.cookies;
 		this.commands = new Discord.Collection();
-		this.player = new Player(this);
+
+		if (this.cookies)
+			this.player = new Player(this, {
+				ytdlOptions: {
+					requestOptions: {
+						headers: {
+							cookie: this.cookies
+						}
+					}
+				}
+			});
+		else
+			this.player = new Player(this);
+
 		this.playerHandler = new PlayerHandler();
 		this.github = new Github(config.githubtoken);
-		
+
 		this.requiredVoicePermissions = [
-            "VIEW_CHANNEL",
-            "CONNECT",
-            "SPEAK"
-        ];
+			"VIEW_CHANNEL",
+			"CONNECT",
+			"SPEAK"
+		];
 		this.requiredTextPermissions = [
 			"VIEW_CHANNEL",
 			"SEND_MESSAGES",
@@ -75,7 +91,7 @@ class Client extends Discord.Client {
 		musicEvents(this.player);
 
 		// Github link
-		
+
 
 		// events using EndTimeout
 		this.playerHandler.setHandler(this.player);
